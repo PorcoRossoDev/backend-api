@@ -1,15 +1,34 @@
 <?php
 namespace App\Services;
+
 use App\Models\Article;
-use Illuminate\Support\Str;
 
 class ArticleService
 {
-    /*
-     * Lấy danh sách Bài viết
-     */
     public function getAll($request)
     {
-        return Article::latest()->paginate(10);
+        $query = Article::query();
+
+        if ($request->keyword) {
+            $query->where('title', 'like', '%' . $request->keyword . '%');
+        }
+
+        return $query->latest()->paginate(10);
+    }
+
+    public function create(array $data): Article
+    {
+        return Article::create($data);
+    }
+
+    public function delete(int $id): bool
+    {
+        $article = Article::find($id);
+
+        if (!$article) {
+            return false;
+        }
+
+        return $article->delete();
     }
 }
