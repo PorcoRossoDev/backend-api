@@ -25,7 +25,37 @@ class OrderController extends Controller
         ];
         $order = $this->orderService->getOrder($params);
         $order_has_receipt = $this->orderService->checkOrderHasReceipt($params);
-        return response()->json($order_has_receipt);
+        return response()->json($order);
+    }
+
+    /**
+     * Đơn hàng trả
+     */
+    public function output()
+    {
+        $params = [
+            // 'id' => 1772,
+            'returned' => 0
+        ];
+        $order = $this->orderService->getOutput($params);
+        $total = $this->orderService->totalOutput($params);
+        return response()->json([
+            'order' => $order,
+            'total' => $total
+        ]);
+    }
+
+    /**
+     * Đơn hàng xuất
+     */
+    public function output_success()
+    {
+        $params = [
+            //'id' => 1772,
+            'returned' => 1
+        ];
+        $order = $this->orderService->getOutput($params);
+        return response()->json($order);
     }
 
     /**

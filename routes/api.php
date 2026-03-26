@@ -10,4 +10,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::apiResource('articles', ArticleController::class);
+
+Route::get('orders/output', [OrderController::class, 'output']);
+Route::get('orders/output-success', [OrderController::class, 'output_success']);
 Route::apiResource('orders', OrderController::class);
