@@ -53,20 +53,22 @@ class OrderService
 
     public function totalOutput($params)
     {
-        $query = OrderItemReceipt::query()
-            ->join('order_items', 'order_items.id', '=', 'order_item_receipts.order_item_id')
+        $query = OrderItemReceipt::query();
+        $query->join('order_items', 'order_items.id', '=', 'order_item_receipts.order_item_id')
             ->join('orders', 'orders.id', '=', 'order_items.order_id')
             ->where('order_item_receipts.returned', $params['returned'])
             ->where('order_item_receipts.qty_received', 1)
             ->when(!empty($params['keyword']), function ($q) use ($params) {
                 $q->where('orders.title', 'like', '%' . $params['keyword'] . '%');
-            })
-            ->selectRaw('
-                SUM(order_item_receipts.qty_received) as total_qty_received,
-                SUM(order_item_receipts.total_price) as total_price
-            ')
-            ->first();
-        return $query;
+            });
+        if( isset($params['id']) && $params['id'] != '' ){
+            $query->where('orders.id', $params['id']);
+        }
+        $query->selectRaw('
+            SUM(order_item_receipts.qty_received) as total_qty_received,
+            SUM(order_item_receipts.total_price) as total_price
+        ');
+        return $query->first();
     }
 
     public function checkOrderHasReceipt($params)
