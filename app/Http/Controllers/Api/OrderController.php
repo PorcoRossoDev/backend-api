@@ -29,17 +29,13 @@ class OrderController extends Controller
     }
 
     /**
-     * Đơn hàng trả
+     * Đơn hàng xuất
      */
-    public function output()
+    public function output(Request $request)
     {
-        $params = [
-            // 'id' => 1772,
-            'id' => 4259,
-            'returned' => 0
-        ];
-        $order = $this->orderService->getOutput($params);
-        $total = $this->orderService->totalOutput($params);
+        $request['returned'] = 0; // Mạc định cho đơn xuất = 0. đơn trả  = 1
+        $order = $this->orderService->getOutput($request);
+        $total = $this->orderService->totalOutput($request);
         return response()->json([
             'order' => $order,
             'total' => $total
@@ -47,7 +43,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Đơn hàng xuất
+     * Đơn hàng trả
      */
     public function output_success()
     {

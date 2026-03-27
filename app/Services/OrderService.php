@@ -30,8 +30,11 @@ class OrderService
     public function getOutput($params)
     {
         $query = Order::query();
-        if( isset($params['id']) && $params['id'] != '' ){
-            $query->where('id', $params['id']);
+        if( isset($params['keyword']) && $params['keyword'] != '' ){
+            $query->where(function ($q) use ($params) {
+                $q->where('id', $params['keyword'])
+                    ->orWhere('orders.product_title', 'like', '%'.$params['keyword'].'%');
+            }); 
         }
         $query->whereHas('orderItemReceipts', function($q) use ($params) {
             $q->where('returned', $params['returned'])->where('qty_received', 1);
@@ -39,6 +42,9 @@ class OrderService
         $query->withCount(['orderItemReceipts' => function ($q) use ($params) {
             $q->where('returned', $params['returned'])->where('qty_received', 1);
         }]);
+        $query->withSum(['orderItemReceipts as total_order_price' => function ($q) use ($params) {
+            $q->where('returned', $params['returned'])->where('qty_received', 1);
+        }], 'total_price');
         $query->with(['orderItems' => function ($q) use ($params) {
             $q->whereHas('orderItemReceipts', function  ($q1) use ($params) {
                 $q1->returnType('returned', $params['returned'])->where('qty_received', 1);
@@ -59,11 +65,11 @@ class OrderService
             ->where('order_item_receipts.returned', $params['returned'])
             ->where('order_item_receipts.qty_received', 1)
             ->when(!empty($params['keyword']), function ($q) use ($params) {
-                $q->where('orders.title', 'like', '%' . $params['keyword'] . '%');
+                $q->where(function ($q1) use ($params) {
+                    $q1->where('orders.id', $params['keyword'])
+                        ->orwhere('orders.product_title', 'like', '%' . $params['keyword'] . '%');
+                });
             });
-        if( isset($params['id']) && $params['id'] != '' ){
-            $query->where('orders.id', $params['id']);
-        }
         $query->selectRaw('
             SUM(order_item_receipts.qty_received) as total_qty_received,
             SUM(order_item_receipts.total_price) as total_price
