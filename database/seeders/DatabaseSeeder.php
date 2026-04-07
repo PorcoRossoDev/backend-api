@@ -11,6 +11,7 @@ use Database\Seeders\ArticleSeeder;
 use Database\Seeders\CategorySeed;
 use Database\Seeders\PostSeed;
 use Database\Seeders\CommentSeeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +23,12 @@ class DatabaseSeeder extends Seeder
         //$this->call(ArticleSeeder::class);
         //$this->call(CategorySeed::class);
         //$this->call(PostSeed::class);
-        $this->call(CommentSeeder::class);
+        //$this->call(CommentSeeder::class);
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('123456'),
+        ]);
     }
 }

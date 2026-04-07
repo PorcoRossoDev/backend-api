@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\AuthController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -18,3 +19,6 @@ Route::apiResource('posts', PostController::class);
 Route::get('orders/output', [OrderController::class, 'output']);
 Route::get('orders/output-success', [OrderController::class, 'output_success']);
 Route::apiResource('orders', OrderController::class);
+
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
