@@ -5,8 +5,9 @@ use App\Models\Category;
 
 class CategoryService
 {
-    public function getCategory()
+    public function getCategory($request)
     {
-        return Category::paginate(10);
+        $query = Category::query();
+        return $query->paginate(20);
     }
 }

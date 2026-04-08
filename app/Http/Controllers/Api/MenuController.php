@@ -1,17 +1,18 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
-use App\Services\CategoryService;
+use App\Services\MenuService;
 
-class CategoryController extends Controller
+class MenuController extends Controller
 {
-    protected $categoryService;
-    public function __construct(CategoryService $categoryService)
+    protected MenuService $menuService;
+
+    public function __construct(MenuService $menuService)
     {
-        $this->categoryService = $categoryService;
+        $this->menuService = $menuService;
     }
 
     /**
@@ -19,8 +20,8 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = $this->categoryService->getCategory($request);
-        return response()->json($categories);
+        $menus = $this->menuService->getAll($request);
+        return response()->json($menus);
     }
 
     /**
