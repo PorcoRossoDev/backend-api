@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('customizations', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->mediumText('image');
             $table->float('price');
             $table->enum('type', ['topping', 'side']);
             $table->timestamps();

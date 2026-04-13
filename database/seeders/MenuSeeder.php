@@ -27,25 +27,25 @@ class MenuSeeder extends Seeder
             ],
 
             'customizations' => [
-                ['name' => 'Extra Cheese', 'price' => 25, 'type' => 'topping'],
-                ['name' => 'Jalapeños', 'price' => 20, 'type' => 'topping'],
-                ['name' => 'Onions', 'price' => 10, 'type' => 'topping'],
-                ['name' => 'Olives', 'price' => 15, 'type' => 'topping'],
-                ['name' => 'Mushrooms', 'price' => 18, 'type' => 'topping'],
-                ['name' => 'Tomatoes', 'price' => 10, 'type' => 'topping'],
-                ['name' => 'Bacon', 'price' => 30, 'type' => 'topping'],
-                ['name' => 'Avocado', 'price' => 35, 'type' => 'topping'],
+                ['name' => 'Extra Cheese', 'image' => 'uploads/cheese.png', 'price' => 25, 'type' => 'topping'],
+                ['name' => 'Jalapeños', 'image' => 'uploads/Jalapenos.png', 'price' => 20, 'type' => 'topping'],
+                ['name' => 'Onions', 'image' => 'uploads/onions.png', 'price' => 10, 'type' => 'topping'],
+                ['name' => 'Olives', 'image' => 'uploads/olives.avif', 'price' => 15, 'type' => 'topping'],
+                ['name' => 'Mushrooms', 'image' => 'uploads/mushrooms.png', 'price' => 18, 'type' => 'topping'],
+                ['name' => 'Tomatoes', 'image' => 'uploads/tomatoes.png', 'price' => 10, 'type' => 'topping'],
+                ['name' => 'Bacon', 'image' => 'uploads/bacon.png', 'price' => 30, 'type' => 'topping'],
+                ['name' => 'Avocado', 'image' => 'uploads/avocado.png', 'price' => 35, 'type' => 'topping'],
 
-                ['name' => 'Coke', 'price' => 30, 'type' => 'side'],
-                ['name' => 'Fries', 'price' => 35, 'type' => 'side'],
-                ['name' => 'Garlic Bread', 'price' => 40, 'type' => 'side'],
-                ['name' => 'Chicken Nuggets', 'price' => 50, 'type' => 'side'],
-                ['name' => 'Iced Tea', 'price' => 28, 'type' => 'side'],
-                ['name' => 'Salad', 'price' => 33, 'type' => 'side'],
-                ['name' => 'Potato Wedges', 'price' => 38, 'type' => 'side'],
-                ['name' => 'Mozzarella Sticks', 'price' => 45, 'type' => 'side'],
-                ['name' => 'Sweet Corn', 'price' => 25, 'type' => 'side'],
-                ['name' => 'Choco Lava Cake', 'price' => 42, 'type' => 'side'],
+                ['name' => 'Coke', 'image' => 'uploads/Coke.png', 'price' => 30, 'type' => 'side'],
+                ['name' => 'Fries', 'image' => 'uploads/fries.png', 'price' => 35, 'type' => 'side'],
+                ['name' => 'Garlic Bread', 'image' => 'uploads/Garlic-Bread.png', 'price' => 40, 'type' => 'side'],
+                ['name' => 'Chicken Nuggets', 'image' => 'uploads/Chicken-Nuggets.webp', 'price' => 50, 'type' => 'side'],
+                ['name' => 'Iced Tea', 'image' => 'uploads/Iced-Tea.png', 'price' => 28, 'type' => 'side'],
+                ['name' => 'Salad', 'image' => 'uploads/salad.png', 'price' => 33, 'type' => 'side'],
+                ['name' => 'Potato Wedges', 'image' => 'uploads/Potato-Wedges.png', 'price' => 38, 'type' => 'side'],
+                ['name' => 'Mozzarella Sticks', 'image' => 'uploads/mozarella-sticks.png', 'price' => 45, 'type' => 'side'],
+                ['name' => 'Sweet Corn', 'image' => 'uploads/Sweet-Corn.png', 'price' => 25, 'type' => 'side'],
+                ['name' => 'Choco Lava Cake', 'image' => 'uploads/Choco-Lava-Cake.png', 'price' => 42, 'type' => 'side'],
             ],
 
             'menu' => [
@@ -222,6 +222,7 @@ class MenuSeeder extends Seeder
         foreach ($data['customizations'] as $cus) {
             Customization::create([
                 'name' => $cus['name'],
+                'image' => $cus['image'],
                 'price' => $cus['price'],
                 'type' => $cus['type'],
             ]);

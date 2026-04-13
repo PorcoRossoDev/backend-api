@@ -8,11 +8,11 @@ use App\Services\MenuService;
 
 class MenuController extends Controller
 {
-    protected MenuService $menuService;
+    protected MenuService $service;
 
-    public function __construct(MenuService $menuService)
+    public function __construct(MenuService $service)
     {
-        $this->menuService = $menuService;
+        $this->service = $service;
     }
 
     /**
@@ -20,7 +20,7 @@ class MenuController extends Controller
      */
     public function index(Request $request)
     {
-        $menus = $this->menuService->getAll($request);
+        $menus = $this->service->getAll($request);
         return response()->json($menus);
     }
 
@@ -45,7 +45,8 @@ class MenuController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = $this->service->getDetail($id);
+        return response()->json($data, 200);
     }
 
     /**

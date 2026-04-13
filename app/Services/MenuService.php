@@ -13,4 +13,10 @@ class MenuService
         if( $request->keyword != '' && $request->keyword != 'undefined' ) $query->where('name', 'like', '%'.$request->keyword.'%');
         return $query->latest()->paginate(20);
     }
+
+    public function getDetail($id)
+    {
+        $query = Menu::find($id);
+        return $query;
+    }
 }
