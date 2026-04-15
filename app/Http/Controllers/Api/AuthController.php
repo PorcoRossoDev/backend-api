@@ -5,9 +5,17 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\AuthService;
 
 class AuthController extends Controller
 {
+    protected AuthService $service;
+    public function __construct(AuthService $service)
+    {
+        $this->service = $service;
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -68,7 +76,8 @@ class AuthController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = $this->service->getUser($id);
+        return response()->json($data, 200);
     }
 
     /**
@@ -84,7 +93,22 @@ class AuthController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $user = $this->service->updateUser($request, $id);
+            if(!$user) {
+                return response()->json([
+                    'message' => 'User not found',
+                ], 404);
+            }
+            return response()->json([
+                'message' => 'User update successfull',
+                'user' => $user
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Something went wrong'
+            ], 500);
+        }
     }
 
     /**

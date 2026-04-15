@@ -10,9 +10,9 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomizationController;
 use App\Http\Controllers\Api\MenuController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('menus', MenuController::class);
@@ -20,6 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('posts', PostController::class);
     Route::apiResource('customizations', CustomizationController::class);
+    Route::apiResource('user', AuthController::class);
 });
 
 Route::get('orders/output', [OrderController::class, 'output']);
